@@ -11,6 +11,7 @@ School.prototype.add = function(name, grade) {
     this.db[grade] = [];
   }
   this.db[grade].push(name);
+  this.db[grade].sort();
 }
 
 School.prototype.grade = function(grade) {
