@@ -11,9 +11,7 @@ School.prototype.add = function(name, grade) {
     this.db[grade] = [];
   }
   var index = this.indexToInsert(this.db[grade], name.toLowerCase());
-  //this.db[grade].push(index);
   this.db[grade].splice(index, 0, name);
-  //this.db[grade].sort();
 }
 
 School.prototype.grade = function(grade) {
@@ -24,24 +22,22 @@ School.prototype.grade = function(grade) {
 }
 
 School.prototype.indexToInsert = function(arr, value) {
-   var low = 0;
-   var high = arr.length - 1;
-   var mid = -1;
-   var current;
+  var low = 0;
+  var high = arr.length;
+  var mid = -1;
 
-   while(low <= high) {
-      mid = Math.floor((low + high) / 2);
-      current = arr[mid];
-      if (current > value) {
+  while(low < high) {
+     mid = Math.floor((low + high)/2);
+
+     if(arr[mid].localeCompare(value) < 0) {
         low = mid + 1;
-      }
-      else if(current < value) {
-         high = mid - 1;
-      } else {
-          return mid;
-      }
-   }
-   return -1;//not found
+     } else if(arr[mid].localeCompare(value) > 0) {
+        high = mid;
+     } else {
+        return mid;
+     }
+  }
+  return low;
 }
 
 module.exports = School;
