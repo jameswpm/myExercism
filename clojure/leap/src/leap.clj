@@ -1,14 +1,8 @@
 (ns leap)
 
 (defn leap-year? [year] ;; <- argslist goes here
-  (if 
       (and 
-        (= (rem year 4) 0)
+        (zero? (rem year 4))
         (or
-          (= (rem year 400) 0)
-          (not= (rem year 100) 0)
-        )
-      ) 
-    true 
-    false)
-)
+          (zero? (rem year 400))
+          (pos? (rem year 100)))))
