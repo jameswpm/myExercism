@@ -14,11 +14,10 @@
 (defn annual-balance-update
   "Returns the annual balance update, taking into account the interest rate."
   [balance]
-  (double
-    (let [rate (interest-rate balance)]
+  (let [rate (bigdec (interest-rate balance))]
     (if (> rate 0)
-      (* balance (/ rate 100))
-      (* balance (- 1 (/ rate 100)))))))
+      (bigdec (+ balance (* balance (/ rate 100))))
+      (bigdec (* balance (- 1 (/ rate 100)))))))
 
 (defn amount-to-donate
   "Returns how much money to donate based on the balance and the tax-free percentage."
