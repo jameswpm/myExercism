@@ -20,14 +20,9 @@
     (zero? (get birds 6))))
 
 (defn n-days-count [birds n]
-  (+
-    (if (>= n 1) (get birds 0) 0)
-    (if (>= n 2) (get birds 1) 0)
-    (if (>= n 3) (get birds 2) 0)
-    (if (>= n 4) (get birds 3) 0)
-    (if (>= n 5) (get birds 4) 0)
-    (if (>= n 6) (get birds 5) 0)
-    (if (>= n 7) (get birds 6) 0)))
+  (->> birds
+       (take n)
+       (reduce +)))
 
 (defn busy-days [birds]
   (+
