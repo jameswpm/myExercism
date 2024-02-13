@@ -7,17 +7,14 @@
   (get birds 6))
 
 (defn inc-bird [birds]
-  (assoc birds 6 (+ 1 (today birds))))
+  (-> birds
+      (assoc 6 (+ 1 (today birds)))))
 
 (defn day-without-birds? [birds]
-  (or
-    (zero? (get birds 0))
-    (zero? (get birds 1))
-    (zero? (get birds 2))
-    (zero? (get birds 3))
-    (zero? (get birds 4))
-    (zero? (get birds 5))
-    (zero? (get birds 6))))
+  (boolean 
+    (->> birds
+        (map zero?)
+        (some true?))))
 
 (defn n-days-count [birds n]
   (->> birds
@@ -25,14 +22,9 @@
        (reduce +)))
 
 (defn busy-days [birds]
-  (+
-    (if (>= (get birds 0) 5)  1 0)
-    (if (>= (get birds 1) 5)  1 0)
-    (if (>= (get birds 2) 5)  1 0)
-    (if (>= (get birds 3) 5)  1 0)
-    (if (>= (get birds 4) 5)  1 0)
-    (if (>= (get birds 5) 5)  1 0)
-    (if (>= (get birds 6) 5)  1 0)))
+  (->> birds
+       (map #(if (>= % 5) 1 0))
+       (reduce +)))
 
 (defn odd-week? [birds]
   (and
