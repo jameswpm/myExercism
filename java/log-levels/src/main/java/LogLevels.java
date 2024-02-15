@@ -12,6 +12,6 @@ public class LogLevels {
 
     public static String reformat(String logLine) {
         String[] split = logLine.trim().split(":");
-        return split[1].trim() + " (" + split[0].trim().replace("[","").replace("]", "").toLowerCase() + ")";
+        return message(logLine) + " (" + logLevel(logLine) + ")";
     }
 }
