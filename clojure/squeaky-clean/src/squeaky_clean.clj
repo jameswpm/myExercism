@@ -7,27 +7,21 @@
        (map (fn [ch]
               (if (Character/isISOControl ch)
                 "CTRL"
-                (str ch))))
-       (apply str))
-  )
+                ch)))
+       (apply str)))
 
 (defn replace-non-letters
   [s]
   (->> s
-       (map (fn [ch]
-              (if (or (Character/isLetter ch) (= ch \_))
-                (str ch)
-                "")))
-       (apply str))
-  )
+       (filter (fn [ch]
+               (or (Character/isLetter ch) (= ch \_))))
+       (apply str)))
 
 (defn replace-greek-letters
   [s]
   (->> s
-       (map (fn [ch]
-              (if (and (>= (int ch) 945) (<= (int ch) 969))
-                ""
-                (str ch))))
+       (remove (fn [ch]
+               (<= 945 (int ch) 969 )))
        (apply str))
   )
 
@@ -44,12 +38,10 @@
                         word
                         (capitalize-first word))
                       )
-               coll-of-str
-  )
-)
+               coll-of-str))
 
 (defn clean
-  "TODO: add docstring"
+  "The function executes a specific cleaning operation on a given string s, executing each operation in order."
   [s]
   (-> s
        (str/replace #"\s" "_")
@@ -58,6 +50,4 @@
        (str/join)
        replace-iso-control
        replace-non-letters
-       replace-greek-letters
-    )
-  )
+       replace-greek-letters))
